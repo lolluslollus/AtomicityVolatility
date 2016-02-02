@@ -30,7 +30,7 @@ namespace AtomicityVolatility
 	public sealed partial class MainPage : ObservablePage
 	{
 		private bool _boolOfMain = false;
-		public bool BoolOfMainVolatileRead { get { return Volatile.Read(ref _boolOfMain); } set { _boolOfMain= value; } }
+		public bool BoolOfMainVolatileRead { get { return Volatile.Read(ref _boolOfMain); } set { _boolOfMain = value; } }
 		public bool BoolOfMainVolatileReadWrite { get { return Volatile.Read(ref _boolOfMain); } set { Volatile.Write(ref _boolOfMain, value); } }
 		public bool BoolOfMain = false;
 		public volatile bool BoolOfMainVolatile = false;
@@ -53,8 +53,8 @@ namespace AtomicityVolatility
 			var checker = new StatusCheckerWithRefToMain(this);
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one updates and we can see the result here
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this one hangs forever
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
 
 
 			while (!BoolOfMain) ;
@@ -63,22 +63,14 @@ namespace AtomicityVolatility
 		}
 		private async void OnButton1_Click(object sender, RoutedEventArgs e)
 		{
-			//// this works, it's boring
-			//ResetValues();
-			//UpdateTbs();
-			//await Task.Run(delegate { return Update_Bool0AndBoolStatic_ToTrue_Async(); }).ConfigureAwait(false);
-			//Debug.WriteLine("Bool0 = " + _persistent.Bool0);
-			//Debug.WriteLine("BoolStatic = " + _boolStatic);
-			//UpdateTbs();
-
 			MakeBtnRed(sender);
 
 			_persistent.Bool0 = false;
 			var checker = new StatusCheckerWithRefToPersistent(_persistent);
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one updates and we can see the result here
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this works
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this works
 
 			while (!_persistent.Bool0) ;
 
@@ -93,13 +85,11 @@ namespace AtomicityVolatility
 			var checker = new StatusCheckerWithRef_VolatileOwner(this);
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one updates and we can see the result here
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this works
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this works
 
 
 			while (!BoolOfMainVolatile) ;
-
-			BoolOfMainStatic = BoolOfMain;
 
 			MakeBtnGreen(sender);
 		}
@@ -112,12 +102,10 @@ namespace AtomicityVolatility
 			checker.StatusUpdated = false;
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one does not hang and sees the right value
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this works
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this works
 
 			while (!checker.StatusUpdated) ;
-
-			BoolOfMainStatic = checker.StatusUpdated;
 
 			MakeBtnGreen(sender);
 		}
@@ -129,12 +117,10 @@ namespace AtomicityVolatility
 			checker.StatusUpdated = false;
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one does not hang and sees the right value
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this one hangs forever
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
 
 			while (!checker.StatusUpdated) ;
-
-			BoolOfMainStatic = checker.StatusUpdated;
 
 			MakeBtnGreen(sender);
 		}
@@ -146,12 +132,10 @@ namespace AtomicityVolatility
 			//checker.StatusUpdated = false;
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one does not hang and sees the right value
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this works
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this works
 
 			while (!checker.StatusUpdated) ;
-
-			BoolOfMainStatic = checker.StatusUpdated;
 
 			MakeBtnGreen(sender);
 		}
@@ -164,12 +148,10 @@ namespace AtomicityVolatility
 			//checker.StatusUpdated = false;
 
 			//await checker.UpdateStatus().ConfigureAwait(false); // this one does not hang and sees the right value
-			Task www = checker.UpdateStatus(); // this one hangs forever
-											   //Task.Run(delegate { return checker.UpdateStatus(); }); // this one hangs forever
+			//Task www = checker.UpdateStatus(); // this works
+			Task.Run(delegate { return checker.UpdateStatus(); }); // this works
 
 			while (!checker.StatusUpdated) ;
-
-			BoolOfMainStatic = checker.StatusUpdated;
 
 			MakeBtnGreen(sender);
 		}
@@ -205,8 +187,8 @@ namespace AtomicityVolatility
 			while (!BoolOfMain) ; // this hangs forever; however, 
 								  // if true is READ after reading a volatile or static property, then it works, 
 								  // never mind if the volatile or static property is set before or after it.
-			// this cannot be reproduced 100%, except that it always hangs when BoolOfMain is written and read alone.
-			// if it is read first, it always hangs.
+								  // this cannot be reproduced 100%, except that it always hangs when BoolOfMain is written and read alone.
+								  // if it is read first, it always hangs.
 
 			//Debugger.Break();
 			//while (!BoolOfMainVolatile) ; // this works
