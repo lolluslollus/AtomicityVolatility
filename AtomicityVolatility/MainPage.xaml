@@ -12,38 +12,24 @@
 
 		<StackPanel Orientation="Horizontal">
 			<Button Click="OnButton0_Click" Content="class A.Property is NOT volatile"/>
-			<TextBlock x:Name="TB_Bool0Static"/>
-			<TextBlock x:Name="TB_Bool0"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton1_Click" Content="class A.Property.Property is NOT volatile"/>
-			<TextBlock x:Name="TB_Bool1Static"/>
-			<TextBlock x:Name="TB_Bool1"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton2_Click" Content="class A.Property is volatile"/>
-			<TextBlock x:Name="TB_Bool2Static"/>
-			<TextBlock x:Name="TB_Bool2"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton3_Click" Content="class B.Property is volatile"/>
-			<TextBlock x:Name="TB_Bool3Static"/>
-			<TextBlock x:Name="TB_Bool3"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton4_Click" Content="class B.Property is NOT volatile"/>
-			<TextBlock x:Name="TB_Bool4Static"/>
-			<TextBlock x:Name="TB_Bool4"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton5_Click" Content="class B.Property is volatile.Read"/>
-			<TextBlock x:Name="TB_Bool5Static"/>
-			<TextBlock x:Name="TB_Bool5"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton6_Click" Content="class B.Property is a property with read lock"/>
-			<TextBlock x:Name="TB_Bool6Static"/>
-			<TextBlock x:Name="TB_Bool6"/>
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton7_Click" Content="all in the same class, no locks"/>

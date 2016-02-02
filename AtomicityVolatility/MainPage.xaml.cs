@@ -234,33 +234,7 @@ namespace AtomicityVolatility
 				(sender as Button).Foreground = new SolidColorBrush(Colors.Green);
 			});
 		}
-		private async Task Update_Bool0AndBoolStatic_ToTrue_Async()
-		{
-			await Task.Delay(500).ConfigureAwait(false);
-			BoolOfMainStatic = true;
-			_persistent.Bool0 = true;
-			BoolOfMain = true;
-		}
 
-		private void UpdateTbs()
-		{
-			Task upd = RunInUiThreadAsync(delegate
-			{
-				TB_Bool0.Text = _persistent.Bool0.ToString();
-				TB_Bool0Static.Text = BoolOfMainStatic.ToString();
-				TB_Bool1.Text = _persistent.Bool0.ToString();
-				TB_Bool1Static.Text = BoolOfMainStatic.ToString();
-				TB_Bool2.Text = _persistent.Bool0.ToString();
-				TB_Bool2Static.Text = BoolOfMainStatic.ToString();
-				TB_Bool3.Text = _persistent.Bool0.ToString();
-				TB_Bool3Static.Text = BoolOfMainStatic.ToString();
-			});
-		}
-
-		private void ResetValues()
-		{
-			BoolOfMainStatic = false; _persistent.Bool0 = false;
-		}
 
 		class StatusChecker
 		{
