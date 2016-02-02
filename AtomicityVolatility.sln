@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AtomicityVolatility", "AtomicityVolatility\AtomicityVolatility.csproj", "{5BE64E41-063E-4FF1-9BF6-A5F61CBDD446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilz", "..\Utilz\Utilz\Utilz.csproj", "{06425613-E56B-4C98-A8D2-58900E36E417}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilz", "..\..\VS2015\Utilz\Utilz\Utilz.csproj", "{06425613-E56B-4C98-A8D2-58900E36E417}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
