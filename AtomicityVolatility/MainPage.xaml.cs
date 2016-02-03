@@ -22,7 +22,7 @@ using Windows.UI.Xaml.Navigation;
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 // LOLLO NOTE debug this with "optimise code" and "native tool chain"
 // LOLLO NOTE these examples are based on while() ;
-// it hogs the thread, which never gets a chance to get the new values.
+// it hogs the thread, which never gets a chance to get the new values. It is actually very bad coding.
 // if you use 
 // while () await Task.Delay(50);
 // the thread spins a couple of times and then gets updated.
