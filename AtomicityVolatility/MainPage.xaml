@@ -34,5 +34,25 @@
 		<StackPanel Orientation="Horizontal" >
 			<Button Click="OnButton7_Click" Content="all in the same class, no locks"/>
 		</StackPanel>
+		<StackPanel Orientation="Horizontal" >
+			<Button Click="OnButton8_Click" Content="class B writes, class A reads, no locks"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" >
+			<Button Click="OnButton9_Click" Content="class B writes, class A reads, locks"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" >
+			<Button Click="OnButton10_Click" Content="class B writes, class A reads, volatile keyword, write lock"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" >
+			<Button Click="OnButton11_Click" Content="class B writes, class A reads, Volatile.Read(), write lock"/>
+		</StackPanel>
+		
+		<CheckBox Content="BoolOfMainObservableProperty" 
+				  IsEnabled="{x:Bind BoolOfMainObservableProperty, Mode=OneWay}"/>
+		<Button Content="Get out" Click="OnGetOut_Click"/>
+
+		<StackPanel Orientation="Horizontal" >
+			<Button Click="OnButtonPerf_Click" Content="measure performance"/>
+		</StackPanel>
 	</StackPanel>
 </uctl:ObservablePage>
