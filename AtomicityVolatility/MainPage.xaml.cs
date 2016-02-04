@@ -29,10 +29,38 @@ namespace AtomicityVolatility
 	/// </summary>
 	public sealed partial class MainPage : ObservablePage
 	{
+		private SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 		private bool _boolOfMain = false;
 		public bool BoolOfMainVolatileRead { get { return Volatile.Read(ref _boolOfMain); } set { _boolOfMain = value; } }
 		public bool BoolOfMainVolatileReadWrite { get { return Volatile.Read(ref _boolOfMain); } set { Volatile.Write(ref _boolOfMain, value); } }
 		public bool BoolOfMain = false;
+		public bool BoolOfMainSemaphore
+		{
+			get
+			{
+				try
+				{
+					_semaphore.Wait();
+					return _boolOfMain;
+				}
+				finally
+				{
+					_semaphore.Release();
+				}
+			}
+			set
+			{
+				try
+				{
+					_semaphore.Wait();
+					_boolOfMain = value;
+				}
+				finally
+				{
+					_semaphore.Release();
+				}
+			}
+		}
 		public volatile bool BoolOfMainVolatile = false;
 		private static bool BoolOfMainStatic = false;
 		private Persistent _persistent = null;
@@ -165,30 +193,34 @@ namespace AtomicityVolatility
 			BoolOfMainVolatile = false;
 			BoolOfMainVolatileReadWrite = false;
 			BoolOfMainVolatileRead = false;
+			BoolOfMainSemaphore = false;
 
 			Task away = Task.Run(async delegate
 		   {
 			   await Task.Delay(500).ConfigureAwait(false);
 
-			   BoolOfMainStatic = true;
-			   _persistent.Bool0 = true;
-			   BoolOfMain = true;
-			   BoolOfMainVolatile = true;
-			   BoolOfMainVolatileReadWrite = true;
-			   BoolOfMainVolatileRead = true;
+			   //BoolOfMainStatic = true;
+			   //_persistent.Bool0 = true;
+			   //BoolOfMain = true;
+			   //BoolOfMainVolatile = true;
+			   //BoolOfMainVolatileReadWrite = true;
+			   //BoolOfMainVolatileRead = true;
+			   BoolOfMainSemaphore = true;
 
 			   Debug.WriteLine("updates done");
 		   });
+
+			while (!BoolOfMainSemaphore) ; // this works
 
 			//while (!BoolOfMainStatic) ; // this works
 			//Debugger.Break();
 			//while (!_persistent.Bool0) ; // this works
 			//Debugger.Break();
-			while (!BoolOfMain) ; // this hangs forever; however, 
-								  // if true is READ after reading a volatile or static property, then it works, 
-								  // never mind if the volatile or static property is set before or after it.
-								  // this cannot be reproduced 100%, except that it always hangs when BoolOfMain is written and read alone.
-								  // if it is read first, it always hangs.
+			//while (!BoolOfMain) ; // this hangs forever; however, 
+			//					  // if true is READ after reading a volatile or static property, then it works, 
+			//					  // never mind if the volatile or static property is set before or after it.
+			//					  // this cannot be reproduced 100%, except that it always hangs when BoolOfMain is written and read alone.
+			//					  // if it is read first, it always hangs.
 
 			//Debugger.Break();
 			//while (!BoolOfMainVolatile) ; // this works
